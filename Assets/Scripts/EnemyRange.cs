@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyRange : EnemyBase
 {
+    [SerializeField] private Transform attackPoint;
+    [SerializeField] private GameObject fireballPrefab;
+    [SerializeField] private float fireballSpeed;
     private enum States
     {
         Chase,
@@ -42,13 +45,36 @@ public class EnemyRange : EnemyBase
 
     private void Attack()
     {
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         transform.LookAt(player.transform.position);
         animator.SetTrigger(TagManager.ATTACK_PARAMETER);
+
+        PowerBarPosition();
         distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance > attackRange)
+
+        if (distance > attackRange && this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
         {
             currentState = States.Chase;
             animator.ResetTrigger(TagManager.ATTACK_PARAMETER);
         }
+    }
+
+    public void SummonFireball()
+    {
+        var fireball = Instantiate(fireballPrefab);
+        var direction = (attackPoint.position - transform.position).normalized;
+        var loodDirection = (player.transform.position - fireball.transform.position);
+
+        fireball.transform.position = attackPoint.position;
+        fireball.transform.LookAt(loodDirection);
+        fireball.GetComponent<Rigidbody>().AddForce(direction * fireballSpeed * Time.deltaTime, ForceMode.Impulse);
+
+        DestroyFireball(fireball);
+    }
+
+    private void DestroyFireball(GameObject obj)
+    {
+        float destroyTime = 5f;
+        Destroy(obj,destroyTime);
     }
 }

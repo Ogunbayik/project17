@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private JoystickController joystick;
 
     [SerializeField] private float speed;
+    [SerializeField] private GameObject powerBar;
 
     private float horizontal;
     private float vertical;
@@ -29,6 +30,8 @@ public class PlayerController : MonoBehaviour
         horizontal = joystick.direction.x;
         vertical = joystick.direction.y;
 
+        powerBar.transform.position = new Vector3(transform.position.x, 3f, transform.position.z);
+        powerBar.transform.rotation = Quaternion.Euler(Vector3.zero);
         movementDirection = new Vector3(horizontal, 0f, vertical).normalized;
         var currentSpeed = movementDirection.magnitude;
         animator.SetFloat(TagManager.SPEED_PARAMETER, currentSpeed);
