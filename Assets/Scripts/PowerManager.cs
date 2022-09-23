@@ -6,12 +6,11 @@ using TMPro;
 public class PowerManager : MonoBehaviour
 {
     public static PowerManager Instance;
-
     public int playerPower;
-    [HideInInspector]
-    public TextMeshPro playerPowerText;
 
     [SerializeField]private int startPower = 1;
+
+    private TextMeshPro playerPowerText;
     private void Awake()
     {
         if(Instance == null)

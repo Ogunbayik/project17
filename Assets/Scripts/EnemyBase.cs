@@ -13,7 +13,7 @@ public class EnemyBase : MonoBehaviour , ICollisinable
 
     [SerializeField] private int minimumPower;
     [SerializeField] private int maximumPower;
-    [SerializeField] protected float movementSpeed;
+    [SerializeField] private float movementSpeed;
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag(TagManager.PLAYER);

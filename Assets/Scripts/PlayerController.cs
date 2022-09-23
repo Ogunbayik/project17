@@ -8,8 +8,8 @@ public class PlayerController : MonoBehaviour
     private JoystickController joystick;
 
     [SerializeField] private float speed;
-    [SerializeField] private GameObject powerBar;
-
+    
+    private GameObject powerBar;
     private float horizontal;
     private float vertical;
     private Vector3 movementDirection;
@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     {
         joystick = FindObjectOfType<JoystickController>();
         animator = GetComponent<Animator>();
+        powerBar = transform.GetChild(2).gameObject;
     }
 
     void Update()
